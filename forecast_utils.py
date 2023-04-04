@@ -15,7 +15,10 @@ def kpi(df):
     RMSE_abs = np.sqrt((df['Error']**2).mean())
     RMSE_rel = RMSE_abs / dem_ave
     print('RMSE: {:0.2f}, {:.2%}'.format(RMSE_abs,RMSE_rel)) 
-    
+    """
+    Note that, unlike for the bias, here we don’t need to worry about selecting the proper demand range to compute the MAPE (like when calculating bias).
+    As we divide df[’Error’] directly by df[’Demand’] before computing the mean, pandas by default is removing the rows where the demand is not defined.
+    """
     
 def moving_average(d, extra_periods=1, n=3):
     
