@@ -8,6 +8,7 @@ matplotlib.rc('font', **font)
 inputs = 'Data//'
 outputs = 'Figures//'
 
+
 ############################################
 
 name = 'chap1-moving-average-fig'
