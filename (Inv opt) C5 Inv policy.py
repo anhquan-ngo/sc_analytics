@@ -29,23 +29,13 @@ transit[1,-1] = d[0]
 stockout_period = np.full(time,False,dtype=bool)
 stockout_cycle = []
 
-# 1. Check whether we received an order at the beginning of the period
-# (transit[ t-1,0] > 0). If so, we need to compute the cycle service level
-# by checking if there was a stock-out last period. Remember, we define the
-# cycle service level as the probability that there is no stock-out just before
-# an order is received.
-# 2. Update the on-hand inventory by subtracting the demand d[t] and
-# adding the received inventory transit[t-1,0]
+# 1. Check whether we received an order at the beginning of the period (transit[ t-1,0] > 0). If so, we need to compute the cycle service level by checking if there was a stock-out last period. Remember, we define the cycle service level as the probability that there is no stock-out just before an order is received.
+# 2. Update the on-hand inventory by subtracting the demand d[t] and adding the received inventory transit[t-1,0] 
 # 3. Indicate in stockout_period[t] whether we had a shortage.
 # 4. Update the net inventory position net[t]. Remember that it is the total intransit inventory transit[t].sum() plus the on-hand inventory hand[t]
-# Note that you can exclude backorders (i. e., excess demand will be lost) by
-# uncommenting the line hand[t] = max(0,hand[t]).
-# 5. Update the in-transit array by offsetting the values of the previous timestep
-# by 1: transit[t,:-1] = transit[t-1,1:]. This represents the fact that
-# the orders move through the supply pipeline.
-# 6. If we are at the review period (t%R==0), we make an order based on the
-# current net inventory position net[t] and the up-to level S. The order is
-# then stored at the extreme of the in-transit array transit[t,L].
+# Note that you can exclude backorders (i. e., excess demand will be lost) by uncommenting the line hand[t] = max(0,hand[t]).
+# 5. Update the in-transit array by offsetting the values of the previous timestep by 1: transit[t,:-1] = transit[t-1,1:]. This represents the fact that the orders move through the supply pipeline.
+# 6. If we are at the review period (t%R==0), we make an order based on the current net inventory position net[t] and the up-to level S. The order is then stored at the extreme of the in-transit array transit[t,L].
 
 for t in range(1,time):
     if transit[t-1,0]>0:
